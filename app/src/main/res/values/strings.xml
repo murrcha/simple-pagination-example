@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ice and Fire characters</string>
+    <string name="refresh">refresh</string>
+    <string name="name">name:</string>
+    <string name="culture">culture:</string>
+    <string name="titles">titles:</string>
+    <string name="aliases">aliases:</string>
+</resources>
