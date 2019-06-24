@@ -36,6 +36,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
+            default:
             case ITEM:
                 View itemView = inflater.inflate(R.layout.character_item, viewGroup, false);
                 viewHolder = new CharacterHolder(itemView);
@@ -51,6 +52,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         switch (getItemViewType(i)) {
+            default:
             case ITEM:
                 ((CharacterHolder) viewHolder).bind(characters.get(i));
                 break;
@@ -90,7 +92,9 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void clear() {
         isLoadingAdded = false;
-        while (getItemCount() > 0) { remove(getItem(0)); }
+        while (getItemCount() > 0) {
+            remove(getItem(0));
+        }
     }
 
     public void addLoadingFooter() {
@@ -117,10 +121,14 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private static final String NO_VALUE = "-";
         private static final String EMPTY_VALUE = " ";
 
-        @NonNull private TextView name;
-        @NonNull private TextView culture;
-        @NonNull private TextView titles;
-        @NonNull private TextView aliases;
+        @NonNull
+        private TextView name;
+        @NonNull
+        private TextView culture;
+        @NonNull
+        private TextView titles;
+        @NonNull
+        private TextView aliases;
 
         public CharacterHolder(@NonNull View itemView) {
             super(itemView);
@@ -137,24 +145,20 @@ public class CharacterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             bindStringsFromList(character.aliases, aliases);
         }
 
-        private void bindStringsFromList(@Nullable List objects, @NonNull TextView view) {
-            if (objects == null) {
-                view.setText(NO_VALUE);
-                return;
-            }
-            if (objects.isEmpty()) {
-                view.setText(NO_VALUE);
-            } else {
+        private void bindStringsFromList(@Nullable List<String> strings, @NonNull TextView view) {
+            if (strings != null && !strings.isEmpty()) {
                 StringBuilder builder = new StringBuilder();
-                for (Object object : objects) {
-                    if (((String) object).trim().isEmpty()) {
+                for (String string : strings) {
+                    if (string.trim().isEmpty()) {
                         builder.append(NO_VALUE);
                         break;
                     }
-                    builder.append(object);
+                    builder.append(string);
                     builder.append(EMPTY_VALUE);
                 }
                 view.setText(builder.toString());
+            } else {
+                view.setText(NO_VALUE);
             }
         }
     }
